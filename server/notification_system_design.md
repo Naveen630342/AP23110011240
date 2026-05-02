@@ -36,11 +36,11 @@ Authorization: Bearer <token>
 
 # Stage 2: Database Design
 
-## 🔹 Choice:
+##  Choice:
 
 MongoDB (scalable, flexible schema)
 
-## 🔹 Schema:
+##  Schema:
 
 ```js
 const NotificationSchema = {
@@ -55,13 +55,13 @@ const NotificationSchema = {
 
 ---
 
-## 🔹 Problems at Scale:
+##  Problems at Scale:
 
 * Large data volume
 * Slow queries
 * High read load
 
-## 🔹 Solutions:
+##  Solutions:
 
 * Indexing
 * Pagination
@@ -72,7 +72,7 @@ const NotificationSchema = {
 
 #  Stage 3: Query Optimization
 
-## 🔹 Given Query:
+##  Given Query:
 
 ```sql
 SELECT * FROM notifications
@@ -80,14 +80,14 @@ WHERE studentID = 1042 AND isRead = false
 ORDER BY createdAt DESC;
 ```
 
-## 🔹 Issues:
+##  Issues:
 
 Full table scan
 No index → slow for millions of records
 
 ---
 
-## 🔹 Optimized Index:
+##  Optimized Index:
 
 ```sql
 CREATE INDEX idx_notifications
@@ -96,14 +96,14 @@ ON notifications(studentID, isRead, createdAt DESC);
 
 ---
 
-## 🔹 Complexity:
+##  Complexity:
 
  Without index → O(N)
  With index → O(log N)
 
 ---
 
-## 🔹 Indexing Every Column?
+##  Indexing Every Column?
 
  Not recommended:
 
@@ -125,13 +125,13 @@ AND createdAt >= NOW() - INTERVAL '7 days';
 
 # Stage 4: Performance Optimization
 
-## 🔹 Problem:
+## Problem:
 
  DB hit on every page load
 
 ---
 
-## 🔹 Solutions:
+##  Solutions:
 
 ### 1. Redis Caching
 
@@ -160,7 +160,7 @@ GET /notifications?page=1&limit=10
 
 ---
 
-## 🔹 Final Approach:
+##  Final Approach:
 
  Redis + WebSockets + Pagination
 
@@ -168,7 +168,7 @@ GET /notifications?page=1&limit=10
 
 #  Stage 5: System Design Fix
 
-## 🔹 Given Problem:
+##  Given Problem:
 
 ```js
 for (student_id of student_ids) {
@@ -180,7 +180,7 @@ for (student_id of student_ids) {
 
 ---
 
-## 🔹 Issues:
+##  Issues:
 
  Sequential → very slow
  No retry mechanism
@@ -188,7 +188,7 @@ for (student_id of student_ids) {
 
 ---
 
-## 🔹 Solution: Queue-Based System
+##  Solution: Queue-Based System
 
 ### Architecture:
 
@@ -224,7 +224,7 @@ async function worker(job) {
 
 ---
 
-## 🔹 Benefits:
+## Benefits:
 
  Parallel processing
  Retry support
@@ -234,7 +234,7 @@ async function worker(job) {
 
 #  Stage 6: Priority Inbox (Top 10 Notifications)
 
-## 🔹 Logic:
+##  Logic:
 
 Priority = Type Weight + Recency
 
@@ -246,7 +246,7 @@ Priority = Type Weight + Recency
 
 ---
 
-## 🔹 Code:
+## Code:
 
 ```js
 function getTopNotifications(notifications) {
@@ -270,21 +270,21 @@ function getTopNotifications(notifications) {
 
 ---
 
-## 🔹 Optimization:
+## Optimization:
 
  Use Min Heap for large data
  Maintain top N dynamically
 
 ---
 
-## 🔹 Handling Continuous Data:
+## Handling Continuous Data:
 
  Use streaming
  Update heap dynamically
 
 ---
 
-# 🎯 Conclusion
+# Conclusion
 
 This system:
 
@@ -292,7 +292,8 @@ This system:
  Scales to millions of records
  Handles failures using queues
  Optimizes performance with caching
- Prioritizes important notifications efficiently
+ Prioritizes important notifications more  efficiently
+
 
 ---
 
